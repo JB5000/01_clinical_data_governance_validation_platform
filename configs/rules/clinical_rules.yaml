@@ -1,0 +1,12 @@
+rules:
+  - id: patient_id_required
+    type: not_null
+    column: patient_id
+  - id: encounter_date_valid
+    type: date_parseable
+    column: encounter_date
+  - id: age_range
+    type: between
+    column: age
+    min: 0
+    max: 120
