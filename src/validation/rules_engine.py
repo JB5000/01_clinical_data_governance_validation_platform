@@ -47,3 +47,12 @@ def validate_batch(
         "compliance_rate": compliance_rate,
         "invalid_rows": invalid_rows,
     }
+
+
+def summarize_error_counts(batch_result: dict[str, Any]) -> dict[str, int]:
+    counts: dict[str, int] = {}
+    for row in batch_result.get("invalid_rows", []):
+        for error in row.get("errors", []):
+            rule_id = error.split(":", 1)[0].strip() if ":" in error else "unknown_rule"
+            counts[rule_id] = counts.get(rule_id, 0) + 1
+    return counts
