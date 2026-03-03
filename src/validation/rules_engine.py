@@ -23,3 +23,27 @@ def validate_record(record: dict[str, Any], rules: list[dict[str, Any]]) -> list
             if not (min_v <= value <= max_v):
                 errors.append(f"{rule_id}: column {col} outside [{min_v}, {max_v}]")
     return errors
+
+
+def validate_batch(
+    records: list[dict[str, Any]],
+    rules: list[dict[str, Any]],
+) -> dict[str, Any]:
+    invalid_rows: list[dict[str, Any]] = []
+    for idx, record in enumerate(records):
+        row_errors = validate_record(record, rules)
+        if row_errors:
+            invalid_rows.append({"row_index": idx, "errors": row_errors})
+
+    total_records = len(records)
+    invalid_count = len(invalid_rows)
+    valid_count = total_records - invalid_count
+    compliance_rate = round((valid_count / total_records) * 100, 2) if total_records else 0.0
+
+    return {
+        "total_records": total_records,
+        "valid_records": valid_count,
+        "invalid_records": invalid_count,
+        "compliance_rate": compliance_rate,
+        "invalid_rows": invalid_rows,
+    }
