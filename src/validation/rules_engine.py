@@ -1,7 +1,10 @@
 """Rule-based validation engine for tabular clinical records."""
 
+import logging
 import re
 from typing import Any
+
+logger = logging.getLogger(__name__)
 
 
 def _is_empty(value: Any) -> bool:
@@ -17,16 +20,22 @@ def validate_record(record: dict[str, Any], rules: list[dict[str, Any]]) -> list
         value = record.get(col)
 
         if kind == "not_null" and _is_empty(value):
-            errors.append(f"{rule_id}: column {col} is null/empty")
+            error = f"{rule_id}: column {col} is null/empty"
+            errors.append(error)
+            logger.warning(error)
         elif kind == "between" and value is not None:
             min_v = rule.get("min")
             max_v = rule.get("max")
             if not (min_v <= value <= max_v):
-                errors.append(f"{rule_id}: column {col} outside [{min_v}, {max_v}]")
+                error = f"{rule_id}: column {col} outside [{min_v}, {max_v}]"
+                errors.append(error)
+                logger.warning(error)
         elif kind == "regex" and value is not None:
             pattern = rule.get("pattern")
             if not re.match(pattern, str(value)):
-                errors.append(f"{rule_id}: column {col} does not match pattern {pattern}")
+                error = f"{rule_id}: column {col} does not match pattern {pattern}"
+                errors.append(error)
+                logger.warning(error)
     return errors
 
 

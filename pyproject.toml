@@ -11,7 +11,8 @@ dependencies = [
     "fastapi",
     "uvicorn",
     "pytest",
+    "pyyaml",
 ]
 
-[tool.pytest.ini_options]
-testpaths = ["tests"]
+[project.scripts]
+validate-data = "src.cli:main"
