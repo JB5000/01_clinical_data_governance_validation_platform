@@ -1,5 +1,6 @@
 """Rule-based validation engine for tabular clinical records."""
 
+import re
 from typing import Any
 
 
@@ -22,6 +23,10 @@ def validate_record(record: dict[str, Any], rules: list[dict[str, Any]]) -> list
             max_v = rule.get("max")
             if not (min_v <= value <= max_v):
                 errors.append(f"{rule_id}: column {col} outside [{min_v}, {max_v}]")
+        elif kind == "regex" and value is not None:
+            pattern = rule.get("pattern")
+            if not re.match(pattern, str(value)):
+                errors.append(f"{rule_id}: column {col} does not match pattern {pattern}")
     return errors
 
 

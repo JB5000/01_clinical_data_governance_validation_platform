@@ -9,6 +9,25 @@ Industrial-grade project focused on bioinformatics/data engineering hiring signa
 - Add tests and reproducibility guarantees
 - Containerize and document execution
 
+## Features
+- Rule-based validation (not_null, between, regex)
+- Compliance reporting
+- REST API with FastAPI
+- Docker containerization
+- CI/CD with GitHub Actions
+
+## Installation
+```bash
+pip install -e .
+```
+
+## Usage
+Run API: `uvicorn src.main:app --reload`
+
+Run tests: `pytest`
+
+Build Docker: `docker build -t clinical-validation .`
+
 ## Folder Layout
 - src/: application modules
 - tests/: unit/integration tests
@@ -25,6 +44,8 @@ Industrial-grade project focused on bioinformatics/data engineering hiring signa
 5. Add Dockerfile + CI workflow
 
 ## MVP Progress
-- Added rule-engine style validation for not-null and range checks.
+- Added rule-engine style validation for not-null, range, and regex checks.
 - Added compliance summary utility for audit-ready metrics.
+- Added REST API for validation.
+- Added Docker and CI.
 - Added tests for core governance logic.

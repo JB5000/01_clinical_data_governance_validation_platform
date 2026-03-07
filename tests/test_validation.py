@@ -50,3 +50,13 @@ def test_summarize_error_counts_by_rule() -> None:
     counts = summarize_error_counts(result)
     assert counts["patient_id_required"] == 2
     assert counts["age_range"] == 1
+
+
+def test_validate_record_regex() -> None:
+    rules = [
+        {"id": "email_format", "type": "regex", "column": "email", "pattern": r"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"},
+    ]
+    rec = {"email": "invalid-email"}
+    errs = validate_record(rec, rules)
+    assert len(errs) == 1
+    assert "email_format" in errs[0]
