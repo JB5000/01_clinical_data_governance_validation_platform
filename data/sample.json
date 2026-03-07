@@ -1,0 +1,7 @@
+{
+  "records": [
+    {"patient_id": "P001", "age": 34, "email": "patient1@example.com"},
+    {"patient_id": "", "age": 150, "email": "invalid"},
+    {"patient_id": "P003", "age": 25, "email": "patient3@example.com"}
+  ]
+}

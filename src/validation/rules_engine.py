@@ -36,6 +36,9 @@ def validate_record(record: dict[str, Any], rules: list[dict[str, Any]]) -> list
                 error = f"{rule_id}: column {col} does not match pattern {pattern}"
                 errors.append(error)
                 logger.warning(error)
+        elif kind == "unique" and value is not None:
+            # Uniqueness check placeholder - requires batch context
+            pass
     return errors
 
 

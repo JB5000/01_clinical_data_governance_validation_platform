@@ -12,6 +12,7 @@ dependencies = [
     "uvicorn",
     "pytest",
     "pyyaml",
+    "flake8",
 ]
 
 [project.scripts]
